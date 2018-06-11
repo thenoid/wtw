@@ -1,0 +1,6 @@
+nginx:
+  pkg: nginx
+  service: 'nginx'
+  supported: True
+  configdir: '/etc/nginx'
+  wwwdir: /var/www/html
