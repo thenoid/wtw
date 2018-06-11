@@ -9,13 +9,23 @@ that differ from whats in defaults.yaml
 ##}
 {% set os_family_map = salt['grains.filter_by']({
       'Debian': {},
-      'RedHat': {'supported': False},
+      'RedHat': {},
     },
     grain="os_family")
 %}
-
 {## Merge the flavor_map to the default settings ##}
 {% do default_settings.nginx.update(os_family_map) %}
+
+{% if grains['os_family'] in ['Debian'] %}
+{% set deb_release_map = salt['grains.filter_by']({
+      '14': {'supported': True, 'wwwdir': '/usr/share/nginx/html'},
+      '16': {'supported': True},
+    },
+    grain="osmajorrelease")
+%}
+{% do default_settings.nginx.update(deb_release_map) %}
+{% endif %}
+
 
 {## Merge in nginx pillar ##}
 {% set nginx = salt['pillar.get']('nginx', default=default_settings.nginx, merge=True) %}

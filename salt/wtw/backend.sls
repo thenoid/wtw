@@ -6,6 +6,8 @@
     - mode: '0644'
     - source: salt://wtw/files/backend
     - template: jinja
+    - defaults:
+        _wwwdir: {{ nginx.wwwdir }}
     - watch_in:
       - service: nginx-service
 
