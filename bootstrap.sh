@@ -1,5 +1,7 @@
 #!/bin/bash
 
+apt-get update
+apt-get dist-upgrade -y
 if dpkg -l | egrep -i salt-minion -q; then
   cowsay "salt already installed"
 else
